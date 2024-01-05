@@ -82,7 +82,7 @@ services:
       - replica
     volumes:
       - ./conf:/usr/local/etc/redis/
-      # Redis 서버를 실행할 때 사용되는 명령어입니다. 이 명령어는 Redis 서버를 구동하고 지정된 경로의 Redis 설정 파일(redis.conf)을 사용하여 구성
+      # Redis 서버를 실행할 때 사용되는 명령어입니다. 이 명령어는 Redis 서버를 구동하고 지정된 경로의 Redis 설정 파일(redis.conf)을 사용하여 구성 
     command: bash -c "apt-get update && apt-get install vim -y && redis-server /usr/local/etc/redis/redis.conf"
     restart: always
   #    deploy:
