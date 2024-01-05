@@ -8,16 +8,16 @@ spring:
     allow-bean-definition-overriding: true
   data:
     redis:
-      host: http://3.35.204.21
+      host: localhost
       port: 6379
   kafka:
     consumer:
-      bootstrap-servers: http://3.35.204.21:9093
+      bootstrap-servers: localhost:9093
       auto-offset-reset: earliest
       enable-auto-commit: false
       auto-commit-interval: 10
     producer:
-      bootstrap-servers: http://3.35.204.21:9093
+      bootstrap-servers: localhost:9093
     backoff:
       interval: 1000
       max_failure: 3
