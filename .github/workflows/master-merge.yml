@@ -12,12 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set spring.profiles.default value
-        run: |
-          if [[ "${{ github.base_ref }}" == "master" ]]; then
-               sed -i 's/default: local/default: main/' drrr-api/src/main/resources/application.yml
-          fi
-          
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
