@@ -3,7 +3,6 @@ package com.drrr.web.security.filter;
 import com.drrr.core.exception.jwt.JwtExceptionCode;
 import com.drrr.web.jwt.util.JwtProvider;
 import com.drrr.web.security.exception.JwtExpiredTokenException;
-import com.drrr.web.security.exception.NotRegisteredIpException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,23 +32,12 @@ public class JwtTokenValidationFilter extends OncePerRequestFilter {
     private static final String HEADER_AUTHORIZATION = "Authorization";
     private final JwtProvider jwtTokenProvider;
     private final Set<String> IgnoreUrlsSet = new HashSet<>(List.of("/actuator/prometheus"));
-    @Value("${api.acceptance.local.ipv4.ip}")
-    private String ipv4AcceptIp;
-    @Value("${api.acceptance.local.ipv6.ip}")
-    private String ipv6AcceptIp;
-    @Value("${api.acceptance.front.ip}")
-    private String frontIp;
+
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request, @NotNull final HttpServletResponse response,
                                     @NotNull final FilterChain filterChain)
             throws ServletException, IOException {
-
-        if (!ipv4AcceptIp.equals(request.getRemoteAddr()) && !ipv6AcceptIp.equals(request.getRemoteAddr())
-                && !frontIp.equals(request.getRemoteAddr())) {
-            log.info("등록되지 않은 IP 요청 -> " + request.getRemoteAddr());
-            throw new NotRegisteredIpException("등록되지 않은 IP 주소의 요청입니다.");
-        }
 
         //prometheus의 지표 수집을 위한 주기적인 request는 무시
         if (IgnoreUrlsSet.contains(request.getRequestURI())) {
