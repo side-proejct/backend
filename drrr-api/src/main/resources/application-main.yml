@@ -8,16 +8,16 @@ spring:
     allow-bean-definition-overriding: true
   data:
     redis:
-      host: http://3.35.204.21
+      host: classpath:security-storage-api/aws/ec2/ec2-http-ip.txt
       port: 6379
   kafka:
     consumer:
-      bootstrap-servers: http://3.35.204.21:9093
+      bootstrap-servers: classpath:security-storage-api/aws/kafka/server-ip.txt
       auto-offset-reset: earliest
       enable-auto-commit: false
       auto-commit-interval: 10
     producer:
-      bootstrap-servers: http://3.35.204.21:9093
+      bootstrap-servers: classpath:security-storage-api/aws/kafka/server-ip.txt
     backoff:
       interval: 1000
       max_failure: 3
@@ -93,9 +93,9 @@ management:
   otlp:
     metrics:
       export:
-        url: http://3.35.204.21:4318/v1/metrics
+        url: classpath:security-storage-api/aws/otlp/url.txt
       tracing:
-        endpoint: http://3.35.204.21:4318/v1/traces
+        endpoint: classpath:security-storage-api/aws/otlp/endpoint.txt
   tracing:
     sampling:
       probability: 1.0
@@ -103,7 +103,7 @@ opentracing:
   jaeger:
     service-name: dr--r--r-- # jaeger service name
     udp-sender:
-      host: http://3.35.204.21 # jaeger server ip
+      host: classpath:security-storage-api/aws/ec2/ec2-http-ip.txt # jaeger server ip
       port: 6831           # jaeger udp port
     enabled: true
     log-spans: true
